@@ -1,9 +1,15 @@
 package com.samuel.workshopmongo.domain;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@Document
 public class Users implements Serializable {
+
+    @Id
     private Long id;
     private String name;
     private String email;

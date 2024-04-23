@@ -1,7 +1,11 @@
 package com.samuel.workshopmongo.resources;
 
 import com.samuel.workshopmongo.domain.Users;
+import com.samuel.workshopmongo.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,13 +18,17 @@ import java.util.List;
 @RequestMapping(value = "/users")
 public class UserResource {
 
+    @Autowired
+    private UserService service;
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<Users>> findAll(){
-        Users maria = new Users(1L, "maria", "maria@gmail.com");
-        Users bruno = new Users(2L, "bruno", "bruno@gmail.com");
-        List<Users> list = new ArrayList<>();
-        list.addAll(Arrays.asList(maria, bruno));
+        List<Users> list = service.findAll();
         return ResponseEntity.ok().body(list);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<Users> save(@RequestBody Users users){
+        return ResponseEntity.ok().body(service.save(users));
     }
 
 }
