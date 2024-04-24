@@ -1,6 +1,7 @@
 package com.samuel.workshopmongo.services;
 
 import com.samuel.workshopmongo.domain.Users;
+import com.samuel.workshopmongo.dto.UserDTO;
 import com.samuel.workshopmongo.repository.UserRepository;
 import com.samuel.workshopmongo.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,15 @@ public class UserService {
     public Users findById(Long id){
         Optional<Users> obj = userRepository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado!"));
+    }
+
+    public void delete(Long id){
+        findById(id);
+        userRepository.deleteById(id);
+    }
+
+    public Users fromDto(UserDTO dto){
+        return new Users(dto.getId(), dto.getName(), dto.getEmail());
     }
 
 }
