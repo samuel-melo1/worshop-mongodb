@@ -39,10 +39,17 @@ public class UserResource {
         Users list = service.findById(id);
         return ResponseEntity.ok().body(new UserDTO(list));
     }
-
     @RequestMapping(value = "{id}",method = RequestMethod.DELETE)
     public ResponseEntity<Void> delete(@PathVariable Long id){
         service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping (value = "{id}",method = RequestMethod.PUT)
+    public ResponseEntity<Void> update(@RequestBody UserDTO userDto, @PathVariable Long id ){
+        Users obj = service.fromDto(userDto);
+        obj.setId(id);
+        obj = service.save(obj);
         return ResponseEntity.noContent().build();
     }
 
