@@ -6,10 +6,7 @@ import com.samuel.workshopmongo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,9 +26,15 @@ public class UserResource {
         return ResponseEntity.ok().body(listDto);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping (method = RequestMethod.POST)
     public ResponseEntity<Users> save(@RequestBody Users users){
         return ResponseEntity.ok().body(service.save(users));
+    }
+
+    @RequestMapping(value = "{id}",method = RequestMethod.GET)
+    public ResponseEntity<UserDTO> findById(@PathVariable Long id){
+        Users list = service.findById(id);
+        return ResponseEntity.ok().body(new UserDTO(list));
     }
 
 }
