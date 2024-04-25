@@ -23,12 +23,12 @@ public class UserService {
         return userRepository.save(users);
     }
 
-    public Users findById(Long id){
+    public Users findById(String id){
         Optional<Users> obj = userRepository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado!"));
     }
 
-    public void delete(Long id){
+    public void delete(String id){
         findById(id);
         userRepository.deleteById(id);
     }
