@@ -2,7 +2,9 @@ package com.samuel.workshopmongo.dto;
 
 import com.samuel.workshopmongo.domain.Users;
 
-public class AuthorDTO {
+import java.io.Serializable;
+
+public class AuthorDTO implements Serializable {
 
     private String id;
     private String name;

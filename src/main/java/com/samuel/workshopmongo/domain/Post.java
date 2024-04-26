@@ -1,5 +1,6 @@
 package com.samuel.workshopmongo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.samuel.workshopmongo.dto.AuthorDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -16,6 +17,7 @@ public class Post implements Serializable {
     private Date date;
     private String title;
     private String body;
+    @JsonIgnore
     private AuthorDTO author;
 
     public AuthorDTO getAuthor() {

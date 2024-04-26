@@ -1,5 +1,6 @@
 package com.samuel.workshopmongo.resources;
 
+import com.samuel.workshopmongo.domain.Post;
 import com.samuel.workshopmongo.domain.Users;
 import com.samuel.workshopmongo.dto.UserDTO;
 import com.samuel.workshopmongo.services.UserService;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping(value = "users")
 public class UserResource {
 
     @Autowired
@@ -34,23 +35,29 @@ public class UserResource {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
-    @RequestMapping(value = "{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
     public ResponseEntity<UserDTO> findById(@PathVariable String id){
         Users list = service.findById(id);
         return ResponseEntity.ok().body(new UserDTO(list));
     }
-    @RequestMapping(value = "{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
     public ResponseEntity<Void> delete(@PathVariable String id){
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @RequestMapping (value = "{id}",method = RequestMethod.PUT)
+    @RequestMapping (value = "/{id}",method = RequestMethod.PUT)
     public ResponseEntity<Void> update(@RequestBody UserDTO userDto, @PathVariable String id ){
         Users obj = service.fromDto(userDto);
         obj.setId(id);
         obj = service.save(obj);
         return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value = "/{id}/posts",method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id){
+        Users list = service.findById(id);
+        return ResponseEntity.ok().body(list.getPosts());
     }
 
 }

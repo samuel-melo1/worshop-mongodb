@@ -24,10 +24,6 @@ public class Users implements Serializable {
         return posts;
     }
 
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
-    }
-
     public Users(){
     }
     public Users(String id, String name, String email) {
